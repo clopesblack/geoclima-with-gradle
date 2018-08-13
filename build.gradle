@@ -10,32 +10,42 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group = 'br.com.uol.teste'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-
 ext {
     springCloudVersion = 'Finchley.SR1'
 }
 
-dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+def lombokVersion = '1.18.2'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    group = 'br.com.uol.teste'
+    version = '0.0.1-SNAPSHOT'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+dependencies {
+    compile project(":geoclima-application")
+    compile project(":geoclima-api")
+}
+
+subprojects {
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }

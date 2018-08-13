@@ -1,6 +1,4 @@
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile project(":geoclima-service")
-    compile project(":geoclima-api")
     compile project(":geoclima-ip-vigilante-client")
 }

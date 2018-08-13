@@ -1,3 +1,6 @@
 rootProject.name = 'geoclima'
 include 'geoclima-application'
 include 'geoclima-api'
+include 'geoclima-service'
+include 'geoclima-ip-vigilante-client'
+

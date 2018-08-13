@@ -35,13 +35,15 @@ allprojects {
         }
     }
 
-    group = 'br.com.uol.teste'
+    group = 'br.com.uol.test'
     version = '0.0.1-SNAPSHOT'
 }
 
 dependencies {
     compile project(":geoclima-application")
     compile project(":geoclima-api")
+    compile project(":geoclima-service")
+    compile project(":geoclima-ip-vigilante-client")
 }
 
 subprojects {

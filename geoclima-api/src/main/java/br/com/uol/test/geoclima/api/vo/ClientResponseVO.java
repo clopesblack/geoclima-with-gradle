@@ -1,4 +1,4 @@
-package br.com.uol.teste.geoclima.api.vo;
+package br.com.uol.test.geoclima.api.vo;
 
 
 import lombok.Data;

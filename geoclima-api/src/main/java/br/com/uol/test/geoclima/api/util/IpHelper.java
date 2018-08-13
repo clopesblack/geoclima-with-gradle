@@ -1,4 +1,4 @@
-package br.com.uol.teste.geoclima.api.util;
+package br.com.uol.test.geoclima.api.util;
 
 import javax.servlet.http.HttpServletRequest;
 

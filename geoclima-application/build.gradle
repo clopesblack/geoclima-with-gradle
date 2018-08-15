@@ -3,4 +3,5 @@ dependencies {
     compile project(":geoclima-service")
     compile project(":geoclima-api")
     compile project(":geoclima-ip-vigilante-client")
+    compile project(":geoclima-meta-weather-client")
 }

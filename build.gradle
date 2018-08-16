@@ -15,6 +15,7 @@ ext {
 }
 
 def lombokVersion = '1.18.2'
+def modelMapperVersion = "2.1.1"
 
 allprojects {
     apply plugin: 'java'
@@ -45,10 +46,12 @@ dependencies {
     compile project(":geoclima-service")
     compile project(":geoclima-ip-vigilante-client")
     compile project(":geoclima-meta-weather-client")
+    compile project(":geoclima-persistence")
 }
 
 subprojects {
     dependencies {
+        compile "org.modelmapper:modelmapper:${modelMapperVersion}"
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }

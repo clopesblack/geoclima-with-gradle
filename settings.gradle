@@ -4,4 +4,5 @@ include 'geoclima-api'
 include 'geoclima-service'
 include 'geoclima-ip-vigilante-client'
 include 'geoclima-meta-weather-client'
+include 'geoclima-persistence'
 

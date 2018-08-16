@@ -7,5 +7,5 @@ import br.com.uol.test.geoclima.service.dto.ClientDTO;
  */
 public interface ClientService {
 
-    void save(ClientDTO toClientDTO, String ip);
+    ClientDTO save(ClientDTO toClientDTO, String ip);
 }

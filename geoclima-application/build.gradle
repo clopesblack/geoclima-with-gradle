@@ -1,7 +1,11 @@
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.1.1'
+
     compile project(":geoclima-service")
     compile project(":geoclima-api")
     compile project(":geoclima-ip-vigilante-client")
     compile project(":geoclima-meta-weather-client")
+    compile project(":geoclima-persistence")
 }

@@ -5,6 +5,7 @@ import br.com.uol.test.geoclima.persistence.repository.ClientRepository;
 import br.com.uol.test.geoclima.service.dto.ClientDTO;
 import br.com.uol.test.geoclima.service.exceptions.ClientNotFoundException;
 import br.com.uol.test.geoclima.service.exceptions.ErrorOnTryListAllClientsException;
+import br.com.uol.test.geoclima.service.exceptions.ErrorOnTryRemovelClientException;
 import br.com.uol.test.geoclima.service.exceptions.ErrorOnTrySaveClientException;
 import br.com.uol.test.geoclima.service.persistence.ClientPersistence;
 import lombok.AllArgsConstructor;
@@ -67,10 +68,21 @@ public class ClientPersistenceImpl implements ClientPersistence {
     @Override
     public List<ClientDTO> list() {
         try {
-            return mapper.map(repository.findAll(), new TypeToken<List<ClientDTO>>() {}.getType());
+            return mapper.map(repository.findAll(), new TypeToken<List<ClientDTO>>() {
+            }.getType());
         } catch (RuntimeException e) {
             log.warn("c='ClientPersistenceImpl', m='list', msg='Erro ao listar clientes.', exception={}", e);
             throw new ErrorOnTryListAllClientsException();
+        }
+    }
+
+    @Override
+    public void delete(String id) {
+        try {
+            repository.deleteById(id);
+        } catch (RuntimeException e) {
+            log.warn("c='ClientPersistenceImpl', m='list', msg='Erro ao remover cliente.', exception={}", e);
+            throw new ErrorOnTryRemovelClientException();
         }
     }
 }

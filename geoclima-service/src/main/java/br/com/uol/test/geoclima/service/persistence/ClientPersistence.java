@@ -13,4 +13,5 @@ public interface ClientPersistence {
     ClientDTO update(ClientDTO client);
     ClientDTO get(String id);
     List<ClientDTO> list();
+    void delete(String id);
 }

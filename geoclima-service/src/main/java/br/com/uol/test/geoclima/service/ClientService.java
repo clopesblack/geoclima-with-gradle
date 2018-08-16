@@ -16,4 +16,6 @@ public interface ClientService {
     ClientDTO getClient(String id);
 
     List<ClientDTO> list();
+
+    void remove(String id);
 }

@@ -45,4 +45,9 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> list() {
         return persistence.list();
     }
+
+    @Override
+    public void remove(String id) {
+        persistence.delete(id);
+    }
 }

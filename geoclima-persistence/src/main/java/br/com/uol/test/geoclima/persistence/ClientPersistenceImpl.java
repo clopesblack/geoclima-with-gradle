@@ -4,13 +4,17 @@ import br.com.uol.test.geoclima.persistence.entity.ClientEntity;
 import br.com.uol.test.geoclima.persistence.repository.ClientRepository;
 import br.com.uol.test.geoclima.service.dto.ClientDTO;
 import br.com.uol.test.geoclima.service.exceptions.ClientNotFoundException;
+import br.com.uol.test.geoclima.service.exceptions.ErrorOnTryListAllClientsException;
 import br.com.uol.test.geoclima.service.exceptions.ErrorOnTrySaveClientException;
 import br.com.uol.test.geoclima.service.persistence.ClientPersistence;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * Created by Caroline Lopes on 15/08/18.
@@ -51,6 +55,22 @@ public class ClientPersistenceImpl implements ClientPersistence {
         } catch (RuntimeException e) {
             log.warn("c='ClientPersistenceImpl', m='update', client={}, msg='Erro ao atualizar o cliente.', exception={}", client, e);
             throw new ErrorOnTrySaveClientException();
+        }
+    }
+
+    @Override
+    public ClientDTO get(String id) {
+        ClientEntity founded = repository.findById(id).orElseThrow(ClientNotFoundException::new);
+        return mapper.map(founded, ClientDTO.class);
+    }
+
+    @Override
+    public List<ClientDTO> list() {
+        try {
+            return mapper.map(repository.findAll(), new TypeToken<List<ClientDTO>>() {}.getType());
+        } catch (RuntimeException e) {
+            log.warn("c='ClientPersistenceImpl', m='list', msg='Erro ao listar clientes.', exception={}", e);
+            throw new ErrorOnTryListAllClientsException();
         }
     }
 }

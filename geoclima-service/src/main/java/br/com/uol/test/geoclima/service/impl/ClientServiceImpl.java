@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Caroline Lopes on 13/08/18.
  */
@@ -32,5 +34,15 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDTO update(ClientDTO client) {
         return persistence.update(client);
+    }
+
+    @Override
+    public ClientDTO getClient(String id) {
+        return persistence.get(id);
+    }
+
+    @Override
+    public List<ClientDTO> list() {
+        return persistence.list();
     }
 }

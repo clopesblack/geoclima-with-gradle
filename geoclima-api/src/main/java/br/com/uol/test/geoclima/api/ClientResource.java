@@ -6,7 +6,6 @@ import br.com.uol.test.geoclima.service.ClientService;
 import br.com.uol.test.geoclima.service.dto.ClientDTO;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.uol.test.geoclima.api.util.IpHelper.getIpFrom;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by Caroline Lopes on 10/08/18.
@@ -28,17 +29,19 @@ public class ClientResource {
     private final ModelMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ClientDTO> save(@RequestBody ClientRequestVO clientRequestVO, HttpServletRequest request) {
+    public ResponseEntity<ClientDTO> save(@RequestBody final ClientRequestVO clientRequestVO,
+                                          final HttpServletRequest request) {
         ClientDTO saved = service.save(mapper.map(clientRequestVO.getClient(), ClientDTO.class), getIpFrom(request));
-        return new ResponseEntity(saved, HttpStatus.CREATED);
+        return new ResponseEntity<>(saved, CREATED);
     }
 
     @PutMapping("/{id}")
-    public ClientResponseVO update(@RequestBody ClientRequestVO clientRequestVO) {
-        ClientResponseVO response = new ClientResponseVO();
-        response.setClient(clientRequestVO.getClient());
-        response.getClient().setName("Update");
-        return response;
+    public ResponseEntity<ClientDTO> update(@PathVariable("id") final String id,
+                                            @RequestBody final ClientRequestVO clientRequestVO) {
+        ClientDTO client = mapper.map(clientRequestVO.getClient(), ClientDTO.class);
+        client.setId(id);
+        ClientDTO updated = service.update(client);
+        return new ResponseEntity<>(updated, OK);
     }
 
     @GetMapping("/{id}")

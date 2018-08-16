@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 public class ClientDTO {
 
     private String id;
-    private String name;
+    private String name
+            ;
     private String age;
     private WeatherDTO weather;
 }

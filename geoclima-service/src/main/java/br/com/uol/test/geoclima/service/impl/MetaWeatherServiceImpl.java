@@ -6,7 +6,7 @@ import br.com.uol.test.geoclima.meta.weather.client.dto.LocationDTO;
 import br.com.uol.test.geoclima.meta.weather.client.dto.TempLocationDTO;
 import br.com.uol.test.geoclima.service.MetaWeatherService;
 import br.com.uol.test.geoclima.service.dto.WeatherDTO;
-import br.com.uol.test.geoclima.service.exceptions.ErrorOnTrySearchWeather;
+import br.com.uol.test.geoclima.service.exceptions.ErrorOnTrySearchWeatherException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class MetaWeatherServiceImpl implements MetaWeatherService {
             return locations;
         } catch (RuntimeException e) {
             log.warn("c='MetaWeatherServiceImpl', m='getLocation', geographicalInfo={}, msg='Erro ao consultar dados meteorologicos', exception={}", geographicalInfo, e);
-            throw new ErrorOnTrySearchWeather();
+            throw new ErrorOnTrySearchWeatherException();
         }
     }
 
@@ -53,13 +53,13 @@ public class MetaWeatherServiceImpl implements MetaWeatherService {
             return getMinAndMaxTemps(getTodayWeather(locations));
         } catch (RuntimeException e) {
             log.warn("c='MetaWeatherServiceImpl', m='getWeather', msg='Erro ao consultar dados meteorologicos', exception={}", e);
-            throw new ErrorOnTrySearchWeather();
+            throw new ErrorOnTrySearchWeatherException();
         }
     }
 
     private void validateLocations(List<LocationDTO> locations) {
         if (CollectionUtils.isEmpty(locations) || StringUtils.isEmpty(locations.get(0).getWoeid())) {
-            throw new ErrorOnTrySearchWeather();
+            throw new ErrorOnTrySearchWeatherException();
         }
     }
 
@@ -67,12 +67,12 @@ public class MetaWeatherServiceImpl implements MetaWeatherService {
         LocalDate now = LocalDate.now();
         List<TempLocationDTO> temperatures = metaWeatherClient.getTemperatureForLocationDate(locations.get(0).getWoeid(), now);
         if (CollectionUtils.isEmpty(temperatures)) {
-            throw new ErrorOnTrySearchWeather();
+            throw new ErrorOnTrySearchWeatherException();
         }
 
         List<TempLocationDTO> nowTemps = temperatures.stream().filter(temperature -> temperature.getCreated().contains(now.format(DATE_PATTERN))).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(nowTemps)) {
-            throw new ErrorOnTrySearchWeather();
+            throw new ErrorOnTrySearchWeatherException();
         }
         return nowTemps;
     }
@@ -82,8 +82,8 @@ public class MetaWeatherServiceImpl implements MetaWeatherService {
         OptionalDouble min = nowTemps.stream().filter(temperature -> !StringUtils.isEmpty(temperature.getMin_temp())).mapToDouble(temperature -> Double.parseDouble(temperature.getMin_temp())).min();
 
         WeatherDTO weather = new WeatherDTO();
-        weather.setMax(max.orElseThrow(ErrorOnTrySearchWeather::new));
-        weather.setMin(min.orElseThrow(ErrorOnTrySearchWeather::new));
+        weather.setMax(max.orElseThrow(ErrorOnTrySearchWeatherException::new));
+        weather.setMin(min.orElseThrow(ErrorOnTrySearchWeatherException::new));
         return weather;
     }
 }

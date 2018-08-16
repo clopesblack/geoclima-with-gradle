@@ -8,9 +8,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
  * Created by Caroline Lopes on 15/08/18.
  */
 @ResponseStatus(value = NOT_FOUND)
-public class ErrorOnTrySearchGeographicalInfo extends GenericErrorException {
+public class ErrorOnTrySaveClientException extends GenericErrorException {
 
-    public ErrorOnTrySearchGeographicalInfo() {
+    public ErrorOnTrySaveClientException() {
         super("00001", "Erro ao tentar buscar a localizaçao pelo IP");
     }
 }

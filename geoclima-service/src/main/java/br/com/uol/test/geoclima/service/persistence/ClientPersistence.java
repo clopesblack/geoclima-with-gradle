@@ -8,4 +8,5 @@ import br.com.uol.test.geoclima.service.dto.ClientDTO;
 public interface ClientPersistence {
 
     ClientDTO save(ClientDTO client);
+    ClientDTO update(ClientDTO client);
 }

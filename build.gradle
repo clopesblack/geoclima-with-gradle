@@ -16,6 +16,7 @@ ext {
 
 def lombokVersion = '1.18.2'
 def modelMapperVersion = "2.1.1"
+def swagger2Version = "2.9.2"
 
 allprojects {
     apply plugin: 'java'
@@ -53,5 +54,7 @@ subprojects {
     dependencies {
         compile "org.modelmapper:modelmapper:${modelMapperVersion}"
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        compile "io.springfox:springfox-swagger2:${swagger2Version}"
+        compile "io.springfox:springfox-swagger-ui:${swagger2Version}"
     }
 }
